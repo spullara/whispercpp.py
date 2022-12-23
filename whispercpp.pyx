@@ -9,7 +9,7 @@ import requests
 import os
 from pathlib import Path
 
-MODELS_DIR = str(Path('~/ggml-models').expanduser())
+MODELS_DIR = '.'
 print("Saving models to:", MODELS_DIR)
 
 
@@ -22,11 +22,11 @@ cdef char* LANGUAGE = b'fr'
 cdef int N_THREADS = os.cpu_count()
 
 MODELS = {
-    'model_ggml_tiny.bin': 'https://ggml.ggerganov.com/ggml-model-whisper-tiny.bin',
-    'model_ggml_base.bin': 'https://ggml.ggerganov.com/ggml-model-whisper-base.bin',
-    'model_ggml_small.bin': 'https://ggml.ggerganov.com/ggml-model-whisper-small.bin',
-    'model_ggml_medium.bin': 'https://ggml.ggerganov.com/ggml-model-whisper-medium.bin',
-    'model_ggml_large.bin': 'https://ggml.ggerganov.com/ggml-model-whisper-large.bin',
+    'tiny.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin',
+    'base.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-base.bin',
+    'small.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-small.bin',
+    'medium.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-medium.bin',
+    'large.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-large-v2.bin',
 }
 
 def model_exists(model):
@@ -90,7 +90,7 @@ cdef class Whisper:
     cdef whisper_full_params params
 
     def __init__(self, model=DEFAULT_MODEL, pb=None):
-        model_fullname = f'model_ggml_{model}.bin'.encode('utf8')
+        model_fullname = f'{model}.bin'.encode('utf8')
         download_model(model_fullname)
         cdef bytes model_b = MODELS_DIR.encode('utf8')  + b'/' + model_fullname
         self.ctx = whisper_init(model_b)
