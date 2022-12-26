@@ -19,7 +19,7 @@ cdef int SAMPLE_RATE = 16000
 cdef char* TEST_FILE = 'test.wav'
 cdef char* DEFAULT_MODEL = 'tiny'
 cdef char* LANGUAGE = b'fr'
-cdef int N_THREADS = os.cpu_count()
+cdef int N_THREADS = 1
 
 MODELS = {
     'tiny.bin': 'https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin',
